@@ -1,0 +1,28 @@
+import("math.lib");
+
+// Multiplication of two polynomials, with orders N-1 and M-1, respectively.
+// The only condition is that N<M.
+poly_mult(N,M) = A,B <: C with {
+    NM = N+M-1;
+
+    A = bus(N); B = bus(M);
+    a(i) = A:selector(i,N);
+    b(i) = B:selector(i,M);
+    C1 = par(i,N,   sum(j,i+1,   a(j)*b(i-j)));
+    C2 = par(i,M-N, sum(j,N,     a(j)*b(i+N-j)));
+    C3 = par(i,N-1, sum(j,N-i-1, a(i+j+1)*b(M-j-1)));
+
+    C = C1,C2,C3;
+};
+
+// Square of two polynomials.  This is a special case of poly_mult(N,M).
+polysq(N) = A <: C with {
+    NM = N+N-1;
+
+    A = bus(N);
+    a(i) = A:selector(i,N);
+    C1 = par(i,N,   sum(j,i+1,   a(j)*a(i-j)));
+    C3 = par(i,N-1, sum(j,N-i-1, a(i+j+1)*a(N-j-1)));
+
+    C = C1,C3;
+};
