@@ -1,0 +1,13 @@
+*~
+.*
+
+*.wav
+
+*.cpp
+*.[oa]
+*.pyc
+
+rm_filter_bank
+
+*-mdoc
+*-svg
