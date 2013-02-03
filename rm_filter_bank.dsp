@@ -2,8 +2,7 @@ import("filter.lib");
 import("math.lib");
 import("poly1.lib");
 
-gpq(P,D) = Q with {
-    N = count(P); // P and D must have the same number of elements
+gpq(P,D,N) = Q with {
     P_sq = P:polysq(N);
     D_sq = (D,(D:reverse(N))):polysq_reverse(N);
     M = 2*N-1;
@@ -15,7 +14,7 @@ gpq(P,D) = Q with {
     q(1) = r(1)/(2*q(0));
     q(i) = (r(i) - sum(k,i-1,(q(k+1)*q(i-k-1))))/(2*q(0));
     Q = par(i,N,q(i));
-    };
+};
 
 // generate a pair of double complementary filters
 // see tf1s() in filter.lib
@@ -27,7 +26,7 @@ with {
   b0d = (b0 + b1*c) / d;
   a1d = (a0 - c) / d;
   lp = tf1(b0d,b1d,a1d);
-  Q = gpq((b0d,b1d),(1.0,a1d));
+  Q = gpq((b0d,b1d),(1.0,a1d),2);
   q(i) = Q:selector(i,2);
   hp = tf1(q(0),q(1),a1d);
 };
@@ -43,7 +42,7 @@ with {
   a1d = 2 * (a0 - csq)/d;
   a2d = (a0 - a1*c + csq)/d;
   lp = tf2(b0d,b1d,b2d,a1d,a2d);
-  Q = gpq((b0d,b1d,b2d),(1.0,a1d,a2d));
+  Q = gpq((b0d,b1d,b2d),(1.0,a1d,a2d),3);
   q(i) = Q:selector(i,3);
   hp = tf2(q(0),q(1),q(2),a1d,a2d);
 };
