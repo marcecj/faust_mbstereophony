@@ -17,8 +17,12 @@ gpq(P,D,N) = Q with {
     Q = par(i,N,q(i));
 };
 
-lowpass3ec(fc) = tf2sc(b21,b11,b01,a11,a01,w1) : tf1sc(0,1,a02,w1)
+lowpass3ec(fc) = lp,hp
 with {
+  N = 3;
+  M = N-1;
+
+  // analog coefficients
   a11 = 0.802636764161030; // format long; poly(p(1:2)) % in octave
   a01 = 1.412270893774204;
   a02 = 0.822445908998816; // poly(p(3)) % in octave
@@ -26,9 +30,28 @@ with {
   b11 = 0;
   b01 = 1.161516418982696;
   w1 = 2*PI*fc;
+
+  // generate the low-pass
+  lp = tf2s(b21,b11,b01,a11,a01,w1) : tf1s(0,1,a02,w1);
+
+  // Generate the double-complementary high-pass from the low-pass coefficients.
+  // Personally, I think this is but-ugly code, but I can't think of a better
+  // way to implement this now.
+  A = tf2s_coeffs(b21,b11,b01,a11,a01,w1);
+  B = tf1s_coeffs(0,1,a02,w1);
+  Ab = A : bus(N),    par(i,N,!);
+  Aa = A : par(i,N,!),bus(N);
+  Bb = B : bus(M),    par(i,M,!);
+  Ba = B : par(i,M,!),bus(M);
+  P = Bb,Ab : poly_mult(M,N);
+  D = Ba,Aa : poly_mult(M,N);
+  Q = gpq(P,D,4);
+  d(i) = D:selector(i,4);
+  q(i) = Q:selector(i,4);
+  hp = iir((q(0),q(1),q(2),q(3)),(d(1),d(2),d(3)));
 };
 
-process = lowpass3ec(1000);
+process = _,_<:lowpass3ec(1000);
 /* process = butter4c; */
 /* process = gpq_test; */
 /* process = tf2sc(0.020083, 0.040167, 0.020083, 1.56102, 0.64135); */
