@@ -10,3 +10,4 @@ w1 = 2*PI*1000;
 
 process = tf2s_coeffs(b21,b11,b01,a11,a01,w1);
 /* process = tf1s_coeffs(0,1,a02,w1); */
+/* process = tf2sc(0.020083, 0.040167, 0.020083, 1.56102, 0.64135); */

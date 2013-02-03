@@ -52,6 +52,3 @@ with {
 };
 
 process = _,_<:lowpass3ec(1000);
-/* process = butter4c; */
-/* process = gpq_test; */
-/* process = tf2sc(0.020083, 0.040167, 0.020083, 1.56102, 0.64135); */
