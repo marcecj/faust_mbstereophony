@@ -2,7 +2,7 @@ import("filter.lib");
 import("math.lib");
 import("poly1.lib");
 
-gpq(P,D) = q with {
+gpq(P,D) = Q with {
     N = count(P); // P and D must have the same number of elements
     P_sq = P:polysq(N);
     D_sq = (D,(D:reverse(N))):polysq_reverse(N);
@@ -11,10 +11,10 @@ gpq(P,D) = q with {
     d(i) = D_sq:selector(i,M);
     R = par(i,M,p(i)-d(i));
     r(i) = R:selector(i,M);
-    Q(0) = sqrt(r(0));
-    Q(1) = r(1)/(2*Q(0));
-    Q(i) = (r(i) - sum(k,i-1,(Q(k+1)*Q(i-k-1))))/(2*Q(0));
-    q = par(i,N,Q(i));
+    q(0) = sqrt(r(0));
+    q(1) = r(1)/(2*q(0));
+    q(i) = (r(i) - sum(k,i-1,(q(k+1)*q(i-k-1))))/(2*q(0));
+    Q = par(i,N,q(i));
     };
 
 // generate a pair of double complementary filters
