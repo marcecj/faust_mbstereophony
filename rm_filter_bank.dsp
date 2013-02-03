@@ -1,11 +1,11 @@
 import("filter.lib");
 import("math.lib");
-import("poly1.lib");
+import("poly3.lib");
 import("filter_helpers.lib");
 
 gpq(P,D,N) = Q with {
     P_sq = P:polysq(N);
-    D_sq = (D,(D:reverse(N))):polysq_reverse(N);
+    D_sq = (D,(D:reverse(N))):poly_mult(N,N);
     M = 2*N-1;
     p(i) = P_sq:selector(i,M);
     d(i) = D_sq:selector(i,M);
