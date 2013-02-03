@@ -1,6 +1,7 @@
 import("filter.lib");
 import("math.lib");
 import("poly1.lib");
+import("filter_helpers.lib");
 
 gpq(P,D,N) = Q with {
     P_sq = P:polysq(N);
@@ -15,38 +16,6 @@ gpq(P,D,N) = Q with {
     q(i) = (r(i) - sum(k,i-1,(q(k+1)*q(i-k-1))))/(2*q(0));
     Q = par(i,N,q(i));
 };
-
-// generate a pair of double complementary filters
-// see tf1s() in filter.lib
-tf1sc(b1,b0,a0,w1) = lp, hp
-with {
-  c   = 1/tan((w1)*0.5/SR); // bilinear-transform scale-factor
-  d   = a0 + c;
-  b1d = (b0 - b1*c) / d;
-  b0d = (b0 + b1*c) / d;
-  a1d = (a0 - c) / d;
-  lp = tf1(b0d,b1d,a1d);
-  Q = gpq((b0d,b1d),(1.0,a1d),2);
-  q(i) = Q:selector(i,2);
-  hp = tf1(q(0),q(1),a1d);
-};
-
-tf2sc(b2,b1,b0,a1,a0,w1) = lp, hp
-with {
-  c   = 1/tan(w1*0.5/SR); // bilinear-transform scale-factor
-  csq = c*c;
-  d   = a0 + a1 * c + csq;
-  b0d = (b0 + b1 * c + b2 * csq)/d;
-  b1d = 2 * (b0 - b2 * csq)/d;
-  b2d = (b0 - b1 * c + b2 * csq)/d;
-  a1d = 2 * (a0 - csq)/d;
-  a2d = (a0 - a1*c + csq)/d;
-  lp = tf2(b0d,b1d,b2d,a1d,a2d);
-  Q = gpq((b0d,b1d,b2d),(1.0,a1d,a2d),3);
-  q(i) = Q:selector(i,3);
-  hp = tf2(q(0),q(1),q(2),a1d,a2d);
-};
-
 
 lowpass3ec(fc) = tf2sc(b21,b11,b01,a11,a01,w1) : tf1sc(0,1,a02,w1)
 with {
