@@ -79,7 +79,7 @@ env.Append(CPPPATH   = [env["FAUST_PATH"],
                         "-Wall", "-Wextra", "-Wno-unused-parameter"],
            CXXFLAGS  = ["-std=c++0x"],
            LINKFLAGS = ["-Wl,--as-needed"],
-           FAUST_FLAGS = ["-mdoc", "-vec", "-t", "240"],
+           FAUST_FLAGS = ["-mdoc", "-vec", "-t", "2400"],
           )
 
 # parallelization flags
