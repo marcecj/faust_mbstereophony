@@ -3,6 +3,7 @@
 
 *.wav
 
+*.cc
 *.cpp
 *.[oa]
 *.pyc
