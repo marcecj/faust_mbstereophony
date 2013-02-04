@@ -1,6 +1,6 @@
 import("math.lib");
 
-// generate a pair of double complementary filters
+// generate a pair of double *c*omplementary filters
 // see tf1s() in filter.lib
 tf1sc(b1,b0,a0,w1) = lp, hp
 with {
@@ -15,6 +15,8 @@ with {
   hp = tf1(q(0),q(1),a1d);
 };
 
+// generate a pair of double *c*omplementary filters
+// see tf2s() in filter.lib
 tf2sc(b2,b1,b0,a1,a0,w1) = lp, hp
 with {
   c   = 1/tan(w1*0.5/SR); // bilinear-transform scale-factor
@@ -31,6 +33,8 @@ with {
   hp = tf2(q(0),q(1),q(2),a1d,a2d);
 };
 
+// digitize the analog coefficients of a second order section
+// see tf2s() in filter.lib
 tf2s_coeffs(b2,b1,b0,a1,a0,w1) = b,a with {
     c   = 1/tan(w1*0.5/SR); // bilinear-transform scale-factor
     csq = c*c;
@@ -45,6 +49,8 @@ tf2s_coeffs(b2,b1,b0,a1,a0,w1) = b,a with {
     a = 1.0,a1d,a2d;
 };
 
+// digitize the analog coefficients of a first order section
+// see tf1s() in filter.lib
 tf1s_coeffs(b1,b0,a0,w1) = b,a with {
     c   = 1/tan((w1)*0.5/SR); // bilinear-transform scale-factor
     d   = a0 + c;

@@ -1,8 +1,10 @@
 import("math.lib");
 
+// reverse the order of a beam (a set of buses)
 reverse(N) = bus(N) <: par(i,N,selector(N-1-i,N));
 
-// Square of two polynomials.  This is a special case of poly_mult(N,M).
+// Multiply two polynomials with the same order N-1.  This is a special case of
+// poly_mult(N,M).
 poly_mult(N,N) = A,B <: C with {
     NN = N+N-1;
 
@@ -14,7 +16,6 @@ poly_mult(N,N) = A,B <: C with {
 
     C = C1,C3;
 };
-
 
 // Multiplication of two polynomials, with orders N-1 and M-1, respectively.
 // The only condition is that N<M.
@@ -31,4 +32,5 @@ poly_mult(N,M) = A,B <: C with {
     C = C1,C2,C3;
 };
 
+// Square of two polynomials.  This is a special case of poly_mult(N,M).
 polysq(N) = bus(N) <: poly_mult(N,N);

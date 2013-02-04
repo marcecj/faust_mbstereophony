@@ -3,6 +3,8 @@ import("math.lib");
 import("poly.lib");
 import("filter_helpers.lib");
 
+// Generate the coefficients Q(z) of the filter Q(z)/D(z) that is
+// double-complementary to the filter P(z)/D(z).
 gpq(P,D,N) = Q with {
     P_sq = P:polysq(N);
     D_sq = (D,(D:reverse(N))):poly_mult(N,N);
@@ -17,6 +19,8 @@ gpq(P,D,N) = Q with {
     Q = par(i,N,q(i));
 };
 
+// Returns a 3rd order low-pass filter with a Cauer design (the same as
+// lowpass3e) along with its corresponding double-*c*omplementary high-pass.
 lowpass3ec(fc) = lp,hp
 with {
     N = 3;
@@ -51,6 +55,12 @@ with {
     hp = iir((q(0),q(1),q(2),q(3)),(d(1),d(2),d(3)));
 };
 
+// Creates a Regalia-Mitra style double-complementary analysis filter bank.
+// After processing, you should use the synthesis filter bank below.
+//
+// Sadly, this does not use the all-pass structure as proposed by Regalia and
+// Mitra. Instead, it implements the equivalent structure using the
+// double-complementary low-pass and high-pass pairs.
 rm_filterbank_analyse(fe) = fb with {
     N = count(fe);
     w(i) = take(i+1,fe);
@@ -60,6 +70,8 @@ rm_filterbank_analyse(fe) = fb with {
     fb = stage(N-1);
 };
 
+// Creates a Regalia-Mitra style double-complementary synthesis filter bank.
+// See the analysis filter bank above for comments.
 rm_filterbank_synthesize(fe) = fb with {
     N = count(fe);
     w(i) = take(i+1,fe);
@@ -69,6 +81,7 @@ rm_filterbank_synthesize(fe) = fb with {
     fb = stage(N-1);
 };
 
+// some demo functions
 rm_filterbank_analyse_demo =
 rm_filterbank_analyse((1000,2000,3000,4000,5000,6000,7000,8000));
 rm_filterbank_synthesize_demo =
