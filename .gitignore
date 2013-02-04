@@ -8,7 +8,7 @@
 *.[oa]
 *.pyc
 
-rm_filter_bank
+mbstereophony
 
 *-mdoc
 *-svg

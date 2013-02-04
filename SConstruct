@@ -92,26 +92,26 @@ if env["CXX"] == "g++" and env["CXXVERSION"] >= "4.5":
         "-floop-block",
     ])
 
-rm_filter_bank_src = [env.Faust("rm_filter_bank.dsp")]
+mbstereophony_src = [env.Faust("mbstereophony.dsp")]
 if env["FAUST_ARCHITECTURE"] in ("jack-qt", "pa-qt"):
-    rm_filter_bank_src.append(faustqt)
+    mbstereophony_src.append(faustqt)
 
 if env["FAUST_ARCHITECTURE"] == "puredata":
-    env.Append(CPPDEFINES = "mydsp=rm_filter_bank")
-    rm_filter_bank = env.SharedLibrary(
-        rm_filter_bank_src,
+    env.Append(CPPDEFINES = "mydsp=mbstereophony")
+    mbstereophony = env.SharedLibrary(
+        mbstereophony_src,
         SHLIBPREFIX="",
         SHLIBSUFFIX="~.pd_linux"
     )
 else:
-    rm_filter_bank = env.Program(rm_filter_bank_src)
+    mbstereophony = env.Program(mbstereophony_src)
 
-doc = env.PDF("rm_filter_bank-mdoc/pdf/rm_filter_bank.pdf",
-              "rm_filter_bank-mdoc/tex/rm_filter_bank.tex")
+doc = env.PDF("mbstereophony-mdoc/pdf/mbstereophony.pdf",
+              "mbstereophony-mdoc/tex/mbstereophony.tex")
 
-env.Alias("rm_filter_bank", rm_filter_bank)
+env.Alias("mbstereophony", mbstereophony)
 env.Alias("doc", doc)
 
-Default("rm_filter_bank")
+Default("mbstereophony")
 
-env.Clean(rm_filter_bank, "rm_filter_bank-mdoc")
+env.Clean(mbstereophony, "mbstereophony-mdoc")
