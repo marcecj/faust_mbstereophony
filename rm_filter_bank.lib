@@ -60,5 +60,16 @@ rm_filterbank_analyse(fe) = fb with {
     fb = stage(N-1);
 };
 
+rm_filterbank_synthesize(fe) = fb with {
+    N = count(fe);
+    w(i) = take(i+1,fe);
+    stage(0) = _,_:lowpass3ec(w(N-1)):-;
+    prev(i)  = (_,_:lowpass3ec(w(N-1-i)):-),par(j,i,_<:lowpass3ec(w(N-1-i)):-);
+    stage(i) = prev(i):stage(i-1);
+    fb = stage(N-1);
+};
+
 rm_filterbank_analyse_demo =
 rm_filterbank_analyse((1000,2000,3000,4000,5000,6000,7000,8000));
+rm_filterbank_synthesize_demo =
+rm_filterbank_analyse((1000,2000,3000)):rm_filterbank_synthesize((1000,2000,3000));
