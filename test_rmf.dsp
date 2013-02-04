@@ -30,3 +30,4 @@ with {
 
 /* process = butter4c; */
 /* process = gpq_test; */
+/* process = _,_<:lowpass3ec(1000); */

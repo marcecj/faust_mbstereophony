@@ -51,4 +51,14 @@ with {
     hp = iir((q(0),q(1),q(2),q(3)),(d(1),d(2),d(3)));
 };
 
-process = _,_<:lowpass3ec(1000);
+rm_filterbank_analyse(fe) = fb with {
+    N = count(fe);
+    w(i) = take(i+1,fe);
+    stage(0) = _ <: lowpass3ec(w(N-1));
+    next(i)  = par(j,i+1,_<:_,_):par(j,i+1,lowpass3ec(w(N-1-i))):bus(2),par(j,i,+);
+    stage(i) = stage(i-1):next(i);
+    fb = stage(N-1);
+};
+
+NChan = 1;
+process = bus(NChan):par(i,NChan,rm_filterbank_analyse((1000,4000,8000)));
