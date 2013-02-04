@@ -1,4 +1,5 @@
 valid_faust_arches = (
+    "bench",
     "sndfile",
     "pa-qt",
     "pa-gtk",
