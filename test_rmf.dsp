@@ -1,4 +1,5 @@
 // TODO: finish, document reference values
+import("rm_filter_bank.lib");
 
 gpq_test = gpq((b1,b2,b3,b4),(a1,a2,a3,a4),4) with {
     b1 = 0.00289819;
@@ -31,3 +32,4 @@ with {
 /* process = butter4c; */
 /* process = gpq_test; */
 /* process = _,_<:lowpass3ec(1000); */
+process = rm_filterbank_analyse_demo;

@@ -60,5 +60,5 @@ rm_filterbank_analyse(fe) = fb with {
     fb = stage(N-1);
 };
 
-NChan = 1;
-process = bus(NChan):par(i,NChan,rm_filterbank_analyse((1000,4000,8000)));
+rm_filterbank_analyse_demo =
+rm_filterbank_analyse((1000,2000,3000,4000,5000,6000,7000,8000));
