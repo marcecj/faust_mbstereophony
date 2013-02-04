@@ -1,6 +1,6 @@
 import("filter.lib");
 import("math.lib");
-import("poly3.lib");
+import("poly.lib");
 import("filter_helpers.lib");
 
 gpq(P,D,N) = Q with {
