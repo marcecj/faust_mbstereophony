@@ -7,6 +7,9 @@ This is a simple implementation of a Regalia-Mitra filter bank using 3rd order
 Cauer low-pass filters as the base designs.  MBStereophony itself is a demo
 effect that down-mixes a stereo signal separately per frequency band.
 
+For implementations in MATLAB, Python and C++ -- the latter of which does not
+work -- see [this repository](http://sourceforge.net/projects/mbstereophony).
+
 ## Usage
 
 Each frequency band consists of a slider that controls whether the band should
