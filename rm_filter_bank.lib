@@ -1,3 +1,9 @@
+declare name        "Regalia-Mitra Filter Bank";
+declare version     "0.1";
+declare author      "Marc Joliet";
+declare license     "MIT";
+declare copyright   "(c)Marc Joliet 2013";
+
 import("filter.lib");
 import("math.lib");
 import("poly.lib");

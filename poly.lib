@@ -1,3 +1,9 @@
+declare name        "PolyLib";
+declare version     "0.1";
+declare author      "Marc Joliet";
+declare license     "MIT";
+declare copyright   "(c)Marc Joliet 2013";
+
 import("math.lib");
 
 // reverse the order of a beam (a set of buses)
