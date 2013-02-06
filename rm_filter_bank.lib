@@ -62,11 +62,14 @@ with {
 };
 
 // Creates a Regalia-Mitra style double-complementary analysis filter bank.
-// After processing, you should use the synthesis filter bank below.
 //
 // Sadly, this does not use the all-pass structure as proposed by Regalia and
 // Mitra. Instead, it implements the equivalent structure using the
 // double-complementary low-pass and high-pass pairs.
+//
+// NOTE: After processing, you might want to use the synthesis filter bank
+// below, since the complete transfer function becomes invariant to changes in
+// the filters (i.e., changing an edge frequency), according to Regalia-Mitra.
 rm_filterbank_analyse(fe) = fb with {
     N = count(fe);
     w(i) = take(i+1,fe);
