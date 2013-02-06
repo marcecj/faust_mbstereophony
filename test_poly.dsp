@@ -1,6 +1,4 @@
-/* import("poly2.lib"); */
-/* import("poly1.lib"); */
-import("poly3.lib");
+import("poly.lib");
 
 N = 3;
 M = 4;
