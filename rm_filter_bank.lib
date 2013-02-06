@@ -49,10 +49,10 @@ with {
     // way to implement this now.
     A = tf2s_coeffs(b21,b11,b01,a11,a01,w1);
     B = tf1s_coeffs(0,1,a02,w1);
-    Ab = A : bus(N),    par(i,N,!);
-    Aa = A : par(i,N,!),bus(N);
-    Bb = B : bus(M),    par(i,M,!);
-    Ba = B : par(i,M,!),bus(M);
+    Ab = A : bus(N),  block(N);
+    Aa = A : block(N),bus(N);
+    Bb = B : bus(M),  block(M);
+    Ba = B : block(M),bus(M);
     P = Bb,Ab : poly_mult(M,N);
     D = Ba,Aa : poly_mult(M,N);
     Q = gpq(P,D,4);
