@@ -18,7 +18,7 @@ gpq(P,D,N) = Q with {
     p(i) = P_sq:selector(i,M);
     d(i) = D_sq:selector(i,M);
     R = par(i,M,p(i)-d(i));
-    r(i) = R:selector(i,M);
+    r(i) = take(i+1,R);
     q(0) = sqrt(r(0));
     q(1) = r(1)/(2*q(0));
     q(i) = (r(i) - sum(k,i-1,(q(k+1)*q(i-k-1))))/(2*q(0));
@@ -53,7 +53,8 @@ with {
     D = (B:block(M),bus(M)), (A:block(N),bus(N)) : poly_mult(M,N);
     Q = gpq(P,D,4);
     d(i) = D:selector(i,4);
-    q(i) = Q:selector(i,4);
+    // d(i) = take(i+1,D); // why does this not work?
+    q(i) = take(i+1,Q);
     hp = iir((q(0),q(1),q(2),q(3)),(d(1),d(2),d(3)));
 };
 
