@@ -8,6 +8,10 @@ valid_faust_arches = (
     "puredata",
 )
 
+##########################
+# Environment definition #
+##########################
+
 env_vars = Variables()
 env_vars.AddVariables(
     EnumVariable("FAUST_ARCHITECTURE",
@@ -24,6 +28,10 @@ env = Environment(tools=["default", "faust"],
 
 if env["FAUST_ARCHITECTURE"].endswith("qt"):
     env.Tool("qt4")
+
+#############################
+# Environment configuration #
+#############################
 
 if env["osc"]:
 
@@ -92,6 +100,10 @@ if env["CXX"] == "g++" and env["CXXVERSION"] >= "4.5":
         "-floop-block",
     ])
 
+########################
+# MBStereophony effect #
+########################
+
 mbstereophony_src = [env.Faust("mbstereophony.dsp")]
 if env["FAUST_ARCHITECTURE"] in ("jack-qt", "pa-qt"):
     mbstereophony_src.append(faustqt)
@@ -108,6 +120,10 @@ else:
 
 doc = env.PDF("mbstereophony-mdoc/pdf/mbstereophony.pdf",
               "mbstereophony-mdoc/tex/mbstereophony.tex")
+
+#################
+# Miscellaneous #
+#################
 
 env.Alias("mbstereophony", mbstereophony)
 env.Alias("doc", doc)
