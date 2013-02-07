@@ -6,8 +6,6 @@ declare copyright   "(c)Marc Joliet 2013";
 
 import("rm_filter_bank.lib");
 
-N = 6; // number of bands
-
 mix_sliders = hgroup("Stereo Mix",
        vslider("Band 1", 1,0,1,0.01),
        vslider("Band 2", 1,0,1,0.01),
@@ -17,10 +15,13 @@ mix_sliders = hgroup("Stereo Mix",
        vslider("Band 6", 1,0,1,0.01)
       );
 
+freqs = 220., 880., 1760., 3520., 7040.;
+N = count(freqs)+1;
+
 m(i) = mix_sliders:selector(i,N);
 
-ana_fb = par(i,2,rm_filterbank_analyse((220., 880., 1760., 3520., 7040.))):interleave(N,2);
-syn_fb = interleave(2,N):par(i,2,rm_filterbank_synthesize((220., 880., 1760., 3520., 7040.)));
+ana_fb = par(i,2,rm_filterbank_analyse(freqs)):interleave(N,2);
+syn_fb = interleave(2,N):par(i,2,rm_filterbank_synthesize(freqs));
 stereo_sum(c) = _,_<:+(*(r),*(1-r)),+(*(1-r),*(r)) with {
     r = c*0.5+0.5;
 };
