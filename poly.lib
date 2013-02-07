@@ -12,8 +12,6 @@ reverse(N) = bus(N) <: par(i,N,selector(N-1-i,N));
 // Multiply two polynomials with the same order N-1.  This is a special case of
 // poly_mult(N,M).
 poly_mult(N,N) = A,B <: C with {
-    NN = N+N-1;
-
     A = bus(N); B = bus(N);
     a(i) = A:selector(i,N);
     b(i) = B:selector(i,N);
@@ -26,8 +24,6 @@ poly_mult(N,N) = A,B <: C with {
 // Multiplication of two polynomials, with orders N-1 and M-1, respectively.
 // The only condition is that N<M.
 poly_mult(N,M) = A,B <: C with {
-    NM = N+M-1;
-
     A = bus(N); B = bus(M);
     a(i) = A:selector(i,N);
     b(i) = B:selector(i,M);
