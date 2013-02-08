@@ -6,6 +6,16 @@ declare copyright   "(c)Marc Joliet 2013";
 
 import("math.lib");
 
+getbcoeffs(P) = B with {
+    N = count(P);
+    B = par(i,N/2,take(i+1,P));
+};
+
+getacoeffs(P) = A with {
+    N = count(P);
+    A = par(i,N/2,take(N/2+1+i,P));
+};
+
 // generate a pair of double *c*omplementary filters
 // see tf1s() in filter.lib
 tf1sc(b1,b0,a0,w1) = lp, hp

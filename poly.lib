@@ -6,6 +6,9 @@ declare copyright   "(c)Marc Joliet 2013";
 
 import("math.lib");
 
+rest((ex,exx)) = exx;
+rest(ex) = ex;
+
 // reverse the order of a beam (a set of buses)
 reverseN(N) = bus(N) <: par(i,N,selector(N-1-i,N));
 reverse(P) = par(i,N,take(N-i,P)) with {

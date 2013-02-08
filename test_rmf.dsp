@@ -1,7 +1,7 @@
 // TODO: finish, document reference values
 import("rm_filter_bank.lib");
 
-gpq_test = gpq((b1,b2,b3,b4),(a1,a2,a3,a4),4) with {
+gpq_test = gpq((b1,b2,b3,b4),(a1,a2,a3,a4)) with {
     b1 = 0.00289819;
     b2 = 0.00869458;
     b3 = 0.00869458;

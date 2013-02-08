@@ -11,12 +11,26 @@ import("filter_helpers.lib");
 
 // Generate the coefficients Q(z) of the filter Q(z)/D(z) that is
 // double-complementary to the filter P(z)/D(z).
-gpq(P,D,N) = Q with {
+gpqN(P,D,N) = Q with {
     P_sq = P:polysqN(N);
     D_sq = (D,(D:reverseN(N))):poly_multN(N,N);
     M = 2*N-1;
     p(i) = P_sq:selector(i,M);
     d(i) = D_sq:selector(i,M);
+    r(i) = p(i)-d(i);
+    q(0) = sqrt(r(0));
+    q(1) = r(1)/(2*q(0));
+    q(i) = (r(i) - sum(k,i-1,(q(k+1)*q(i-k-1))))/(2*q(0));
+    Q = par(i,N,q(i));
+};
+
+gpq(P,D) = Q with {
+    N = count(P);
+    P_sq = polysq(P);
+    D_sq = poly_mult(D,reverse(D));
+    M = 2*N-1;
+    p(i) = take(i+1,P_sq);
+    d(i) = take(i+1,D_sq);
     r(i) = p(i)-d(i);
     q(0) = sqrt(r(0));
     q(1) = r(1)/(2*q(0));
@@ -44,17 +58,12 @@ with {
     lp = tf2s(b21,b11,b01,a11,a01,w1) : tf1s(0,1,a02,w1);
 
     // Generate the double-complementary high-pass from the low-pass coefficients.
-    // Personally, I think this is butt-ugly code, but I can't think of a better
-    // way to implement this now.
     A = tf2s_coeffs(b21,b11,b01,a11,a01,w1);
     B = tf1s_coeffs(0,1,a02,w1);
-    P = (B:bus(M),block(M)), (A:bus(N),block(N)) : poly_multN(M,N);
-    D = (B:block(M),bus(M)), (A:block(N),bus(N)) : poly_multN(M,N);
-    Q = gpq(P,D,4);
-    d(i) = D:selector(i,4);
-    // d(i) = take(i+1,D); // why does this not work?
-    q(i) = take(i+1,Q);
-    hp = iir((q(0),q(1),q(2),q(3)),(d(1),d(2),d(3)));
+    P = poly_mult(getbcoeffs(B),getbcoeffs(A));
+    D = poly_mult(getacoeffs(B),getacoeffs(A));
+    Q = gpq(P,D);
+    hp = iir(Q,(rest(D)));
 };
 
 // Creates a Regalia-Mitra style double-complementary analysis filter bank.
