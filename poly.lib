@@ -7,32 +7,22 @@ declare copyright   "(c)Marc Joliet 2013";
 import("math.lib");
 
 // reverse the order of a beam (a set of buses)
-reverse(N) = bus(N) <: par(i,N,selector(N-1-i,N));
+reverseN(N) = bus(N) <: par(i,N,selector(N-1-i,N));
 
-// Multiply two polynomials with the same order N-1.  This is a special case of
-// poly_mult(N,M).
-poly_mult(N,N) = A,B <: C with {
-    A = bus(N); B = bus(N);
-    a(i) = A:selector(i,N);
-    b(i) = B:selector(i,N);
-    C1 = par(i,N,   sum(j,i+1,   a(j)*b(i-j)));
-    C3 = par(i,N-1, sum(j,N-i-1, a(i+j+1)*b(N-j-1)));
+// Multiplication of two polynomials, with orders M-1 and N-1, respectively.
+// The only condition is that M<N.
+poly_multN(M,N) = A,B <: C with {
+    MN = (M-1)+(N-1)+1;
 
-    C = C1,C3;
-};
+    A = bus(M); B = bus(N);
 
-// Multiplication of two polynomials, with orders N-1 and M-1, respectively.
-// The only condition is that N<M.
-poly_mult(N,M) = A,B <: C with {
-    A = bus(N); B = bus(M);
-    a(i) = A:selector(i,N);
-    b(i) = B:selector(i,M);
-    C1 = par(i,N,   sum(j,i+1,   a(j)*b(i-j)));
-    C2 = par(i,M-N, sum(j,N,     a(j)*b(i+N-j)));
-    C3 = par(i,N-1, sum(j,N-i-1, a(i+j+1)*b(M-j-1)));
+    A1 = par(i,N-1,0),A,par(i,N-1,0);
+    B1 = B:reverseN(N);
 
-    C = C1,C2,C3;
+    a(i) = A1:selector(i,N+N+M-2);
+    b(i) = B1:selector(i,N);
+    C = par(i,MN,sum(j,N,a(j+i)*b(j)));
 };
 
 // Square of two polynomials.  This is a special case of poly_mult(N,M).
-polysq(N) = bus(N) <: poly_mult(N,N);
+polysqN(N) = bus(N) <: poly_multN(N,N);
