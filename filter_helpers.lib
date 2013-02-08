@@ -41,7 +41,7 @@ with {
 
 // digitize the analog coefficients of a second order section
 // see tf2s() in filter.lib
-tf2s_coeffs(b2,b1,b0,a1,a0,w1) = b,a with {
+tf2s_coeffs(b2,b1,b0,a1,a0,w1) = coeffs with {
     c   = 1/tan(w1*0.5/SR); // bilinear-transform scale-factor
     csq = c*c;
     d   = a0 + a1 * c + csq;
@@ -51,19 +51,17 @@ tf2s_coeffs(b2,b1,b0,a1,a0,w1) = b,a with {
     a1d = 2 * (a0 - csq)/d;
     a2d = (a0 - a1*c + csq)/d;
 
-    b = b0d,b1d,b2d;
-    a = 1.0,a1d,a2d;
+    coeffs = b0d,b1d,b2d,1.0,a1d,a2d;
 };
 
 // digitize the analog coefficients of a first order section
 // see tf1s() in filter.lib
-tf1s_coeffs(b1,b0,a0,w1) = b,a with {
+tf1s_coeffs(b1,b0,a0,w1) = coeffs with {
     c   = 1/tan((w1)*0.5/SR); // bilinear-transform scale-factor
     d   = a0 + c;
     b1d = (b0 - b1*c) / d;
     b0d = (b0 + b1*c) / d;
     a1d = (a0 - c) / d;
 
-    b = b0d,b1d;
-    a = 1.0,a1d;
+    coeffs = b0d,b1d,1.0,a1d;
 };
