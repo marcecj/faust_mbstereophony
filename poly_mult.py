@@ -21,3 +21,25 @@ def poly_mult(P,D):
             Q[NM-N+i] += P[i+j]*D[M-j-1]
 
     return Q
+
+def poly_mult1(P,D):
+
+    D = D[::-1]
+    N = len(P)
+    M = len(D)
+    NM = (N-1)+(M-1)+1
+    P = np.hstack((np.zeros(M-1),P,np.zeros(M-1)))
+    D = np.hstack(D)
+    Q = np.zeros(NM)
+
+    print P
+    print D
+
+    print N,M,NM
+
+    for i in range(NM):
+        for j in range(M):
+            print i,j+i,j
+            Q[i] += P[j+i]*D[j]
+
+    return Q
