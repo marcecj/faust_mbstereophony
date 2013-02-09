@@ -33,4 +33,5 @@ with {
 /* process = gpq_test; */
 /* process = _,_<:bandsplit3ec(1000); */
 /* process = rm_filterbank_analyse_demo; */
+/* process = getacoeffs((1,2,3,4)); */
 process = rm_filterbank_synthesize_demo;

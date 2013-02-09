@@ -7,5 +7,6 @@ M = 4;
 /* process = reverse((1,2,3)); */
 /* process = par(i,N,i+1):polysqN(N); */
 /* process = polysq(par(i,N,i+1)); */
+/* process = rest((1,2,3)),rest(1); */
 b = 2,3;
 process = count(poly_mult((1,2,3,4),(1,2,3)));
