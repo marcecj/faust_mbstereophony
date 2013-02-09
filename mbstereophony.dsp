@@ -6,17 +6,12 @@ declare copyright   "(c)Marc Joliet 2013";
 
 import("rm_filter_bank.lib");
 
-mix_sliders = hgroup("Stereo Mix",
-       vslider("Band 1", 1,0,1,0.01),
-       vslider("Band 2", 1,0,1,0.01),
-       vslider("Band 3", 1,0,1,0.01),
-       vslider("Band 4", 1,0,1,0.01),
-       vslider("Band 5", 1,0,1,0.01),
-       vslider("Band 6", 1,0,1,0.01)
-      );
-
 freqs = 220., 880., 1760., 3520., 7040.;
-N = count(freqs)+1;
+N = count(freqs)+1; // the number of bands
+
+mix_sliders = hgroup("Stereo Mix",
+    par(i,N,vslider("Band %j", 1,0,1,0.01) with {j=i+1;})
+) ;
 
 m(i) = mix_sliders:selector(i,N);
 
