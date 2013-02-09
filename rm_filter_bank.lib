@@ -40,7 +40,7 @@ gpq(P,D) = Q with {
 
 // Returns a 3rd order low-pass filter with a Cauer design (the same as
 // lowpass3e) along with its corresponding double-*c*omplementary high-pass.
-lowpass3ec(fc) = lp,hp
+bandsplit3ec(fc) = lp,hp
 with {
     N = 3;
     M = N-1;
@@ -78,8 +78,8 @@ with {
 rm_filterbank_analyse(fe) = fb with {
     N = count(fe);
     w(i) = take(i+1,fe);
-    stage(0) = _ <: lowpass3ec(w(N-1));
-    next(i)  = par(j,i+1,_<:_,_):par(j,i+1,lowpass3ec(w(N-1-i))):bus(2),par(j,i,+);
+    stage(0) = _ <: bandsplit3ec(w(N-1));
+    next(i)  = par(j,i+1,_<:_,_):par(j,i+1,bandsplit3ec(w(N-1-i))):bus(2),par(j,i,+);
     stage(i) = stage(i-1):next(i);
     fb = stage(N-1);
 };
@@ -89,8 +89,8 @@ rm_filterbank_analyse(fe) = fb with {
 rm_filterbank_synthesize(fe) = fb with {
     N = count(fe);
     w(i) = take(i+1,fe);
-    stage(0) = _,_:lowpass3ec(w(N-1)):-;
-    prev(i)  = (_,_:lowpass3ec(w(N-1-i)):-),par(j,i,_<:lowpass3ec(w(N-1-i)):-);
+    stage(0) = _,_:bandsplit3ec(w(N-1)):-;
+    prev(i)  = (_,_:bandsplit3ec(w(N-1-i)):-),par(j,i,_<:bandsplit3ec(w(N-1-i)):-);
     stage(i) = prev(i):stage(i-1);
     fb = stage(N-1);
 };

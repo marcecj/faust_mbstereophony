@@ -31,6 +31,6 @@ with {
 
 /* process = butter4c; */
 /* process = gpq_test; */
-/* process = _,_<:lowpass3ec(1000); */
+/* process = _,_<:bandsplit3ec(1000); */
 /* process = rm_filterbank_analyse_demo; */
 process = rm_filterbank_synthesize_demo;
