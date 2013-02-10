@@ -118,16 +118,10 @@ if env["FAUST_ARCHITECTURE"] == "puredata":
 else:
     mbstereophony = env.Program(mbstereophony_src)
 
-doc = env.PDF("mbstereophony-mdoc/pdf/mbstereophony.pdf",
-              "mbstereophony-mdoc/tex/mbstereophony.tex")
-
 #################
 # Miscellaneous #
 #################
 
 env.Alias("mbstereophony", mbstereophony)
-env.Alias("doc", doc)
 
 Default("mbstereophony")
-
-env.Clean(mbstereophony, "mbstereophony-mdoc")
