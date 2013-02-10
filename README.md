@@ -3,10 +3,10 @@ Marc Joliet <marcec@gmx.de>
 
 ## Introduction
 
-This is a simple implementation of a Regalia-Mitra filter bank [rmpaper][] using
-3rd order Cauer low-pass filters as the base designs.  There are four filter
-bank programs available which are described below.  MBStereophony itself is a
-demo effect that down-mixes a stereo signal separately per frequency band.
+This is a simple implementation of a Regalia-Mitra filter bank using 3rd order
+Cauer low-pass filters as the base designs.  There are four filter bank programs
+available which are described below.  MBStereophony itself is a demo effect that
+down-mixes a stereo signal separately per frequency band.
 
 For implementations in MATLAB, Python and C++ - the latter of which does not
 work - see [this repository](http://sourceforge.net/projects/mbstereophony).
@@ -56,9 +56,8 @@ exponential increase in compilation time for each additional band.
 ## References
 
 The original paper (and some accompanying papers) can be downloaded from Pillip
-Regalias [home page][regalia].
+Regalias [home page](http://faculty.cua.edu/regalia/).
 
-[rmpaper]: P. A. Regalia, P. P. Vaidyanathan, M. Renfors, Y. Neuvo, and S. K.
-Mitra, "Tree-structured complementary filter banks using all-pass sections,"
-IEEE Trans. Circuits and Systems, vol. 34, no. 12, pp. 1470–1484, December 1987.
-[regalia]: http://faculty.cua.edu/regalia/
+P. A. Regalia, P. P. Vaidyanathan, M. Renfors, Y. Neuvo, and S. K.  Mitra,
+"Tree-structured complementary filter banks using all-pass sections," IEEE
+Trans. Circuits and Systems, vol. 34, no. 12, pp. 1470–1484, December 1987.
