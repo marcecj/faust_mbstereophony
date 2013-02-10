@@ -118,10 +118,34 @@ if env["FAUST_ARCHITECTURE"] == "puredata":
 else:
     mbstereophony = env.Program(mbstereophony_src)
 
+#############################
+# Regalia-Mitra filter bank #
+#############################
+
+rmfb_dsp = env.Glob("rmfb*.dsp")
+
+rmfb = []
+for dsp in rmfb_dsp:
+    rmfb_src = [env.Faust(dsp)]
+    if env["FAUST_ARCHITECTURE"] in ("jack-qt", "pa-qt"):
+        rmfb_src.append(faustqt)
+
+    if env["FAUST_ARCHITECTURE"] == "puredata":
+        env.Append(CPPDEFINES = "mydsp=mbstereophony")
+        rmfb = env.SharedLibrary(
+            rmfb_src,
+            SHLIBPREFIX="",
+            SHLIBSUFFIX="~.pd_linux"
+        )
+    else:
+        rmfb.append(env.Program(rmfb_src))
+
 #################
 # Miscellaneous #
 #################
 
 env.Alias("mbstereophony", mbstereophony)
+env.Alias("rmfb", rmfb)
+env.Alias("all", mbstereophony + rmfb)
 
 Default("mbstereophony")
