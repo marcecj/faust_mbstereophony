@@ -6,11 +6,13 @@ declare copyright   "(c)Marc Joliet 2013";
 
 import("math.lib");
 
+// get the FIR part B of an IIR filter P = (b0,b1,...,bN,a0,a1,...,aN)
 getbcoeffs(P) = B with {
     N = count(P);
     B = par(i,N/2,take(i+1,P));
 };
 
+// get the IIR part A of an IIR filter A = (b0,b1,...,bN,a0,a1,...,aN)
 getacoeffs(P) = A with {
     N = count(P);
     A = par(i,N/2,take(N/2+1+i,P));
