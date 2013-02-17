@@ -15,8 +15,8 @@ mix_sliders = hgroup("Stereo Mix",
 
 m(i) = mix_sliders:selector(i,N);
 
-ana_fb = par(i,2,rm_filterbank_analyse(freqs)):interleave(N,2);
-syn_fb = interleave(2,N):par(i,2,rm_filterbank_synthesize(freqs));
+ana_fb = par(i,2,rm_filterbank_analyse3e(freqs)):interleave(N,2);
+syn_fb = interleave(2,N):par(i,2,rm_filterbank_synthesize3e(freqs));
 stereo_sum(c) = _,_<:+(*(r),*(1-r)),+(*(1-r),*(r)) with {
     r = c*0.5+0.5;
 };

@@ -8,4 +8,4 @@ import("rm_filter_bank.lib");
 
 freqs = 220., 880., 1760., 3520., 7040.;
 
-process = rm_filterbank_analyse(freqs), (bus(count(freqs)+1):>_);
+process = rm_filterbank_analyse3e(freqs), (bus(count(freqs)+1):>_);

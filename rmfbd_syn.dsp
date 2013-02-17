@@ -22,4 +22,4 @@ freq_sliders = hgroup("Filterbank edge frequencies",
 f(i) = freq_sliders:selector(i,N);
 freqs = par(i,N,f(i));
 
-process = rm_filterbank_analyse(freqs), rm_filterbank_synthesize(freqs);
+process = rm_filterbank_analyse3e(freqs), rm_filterbank_synthesize3e(freqs);
