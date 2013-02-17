@@ -1,3 +1,4 @@
+// vim:ft=faust
 declare name        "Filter Helpers";
 declare version     "0.1";
 declare author      "Marc Joliet";
