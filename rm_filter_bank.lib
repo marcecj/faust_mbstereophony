@@ -27,7 +27,6 @@ gpq(P,D) = Q with {
     N = count(P);
     P_sq = polysq(P);
     D_sq = poly_mult(D,reverse(D));
-    M = 2*N-1;
     r(i) = take(i+1,P_sq) - take(i+1,D_sq);
     q(0) = sqrt(r(0));
     q(1) = r(1)/(2*q(0));
@@ -39,9 +38,6 @@ gpq(P,D) = Q with {
 // lowpass3e) along with its corresponding double-*c*omplementary high-pass.
 bandsplit3ec(fc) = lp,hp
 with {
-    N = 3;
-    M = N-1;
-
     // analog coefficients ("[z,p,g] = ncauer (0.2, 60, 3)" in octave)
     a11 = 0.802636764161030; // format long; poly(p(1:2)) % in octave
     a01 = 1.412270893774204;
