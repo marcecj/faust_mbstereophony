@@ -26,11 +26,10 @@ poly_multN(M,N) = A,B <: C with {
     A = bus(M); B = bus(N);
 
     A1 = par(i,N-1,0),A,par(i,N-1,0);
-    B1 = B:reverseN(N);
 
     a(i) = A1:selector(i,N+N+M-2);
-    b(i) = B1:selector(i,N);
-    C = par(i,MN,sum(j,N,a(j+i)*b(j)));
+    b(i) = B:selector(i,N);
+    C = par(i,MN,sum(j,N,a(j+i)*b(N-1-j)));
 };
 
 poly_mult(A,B) = C with {
@@ -39,11 +38,10 @@ poly_mult(A,B) = C with {
     MN = (M-1)+(N-1)+1;
 
     A1 = par(i,N-1,0),A,par(i,N-1,0);
-    B1 = reverse(B);
 
     a(i) = A1:selector(i,N+N+M-2);
-    b(i) = take(i+1,B1);
-    C = par(i,MN,sum(j,N,a(j+i)*b(j)));
+    b(i) = take(i,B);
+    C = par(i,MN,sum(j,N,a(j+i)*b(N-j)));
 };
 
 // Square of two polynomials.  This is a special case of poly_mult(N,M). One
