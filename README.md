@@ -27,7 +27,7 @@ bands.  They follow the following naming scheme:
   bank ("syn").
 
 The static filter banks have the edge frequencies set to 220, 880, 1760, 3520,
-and 7040 Hz.  All four of the applications has 7 audio inputs and 7 audio
+and 7040 Hz.  All four of the applications have 7 audio inputs and 7 audio
 outputs:  The first input is for the input signal, while the first 6 outputs are
 from the analysis filter bank.  Correspondingly, the last 6 inputs belong to the
 reconstruction filter bank, while the last output is the reconstructed signal.
