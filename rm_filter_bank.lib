@@ -11,7 +11,7 @@ import("poly.lib");
 import("filter_helpers.lib");
 
 // Generate the coefficients Q(z) of the filter Q(z)/D(z) that is
-// double-complementary to the filter P(z)/D(z).
+// doubly complementary to the filter P(z)/D(z).
 gpqN(P,D,N) = Q with {
     P_sq = P:polysqN(N);
     D_sq = (D,(D:reverseN(N))):poly_multN(N,N);
@@ -35,7 +35,7 @@ gpq(P,D) = Q with {
 };
 
 // Returns a 3rd order low-pass filter with a Cauer design (the same as
-// lowpass3e) along with its corresponding double-*c*omplementary high-pass.
+// lowpass3e) along with its corresponding doubly *c*omplementary high-pass.
 bandsplit3ec(fc) = lp,hp
 with {
     // analog coefficients ("[z,p,g] = ncauer (0.2, 60, 3)" in octave)
@@ -50,7 +50,8 @@ with {
     // generate the low-pass
     lp = tf2s(b21,b11,b01,a11,a01,w1) : tf1s(0,1,a02,w1);
 
-    // Generate the double-complementary high-pass from the low-pass coefficients.
+    // Generate the doubly complementary high-pass from the low-pass
+    // coefficients.
     A = tf2s_coeffs(b21,b11,b01,a11,a01,w1);
     B = tf1s_coeffs(0,1,a02,w1);
     P = poly_mult(getbcoeffs(B),getbcoeffs(A));
@@ -59,11 +60,11 @@ with {
     hp = iir(Q,(rest(D)));
 };
 
-// Creates a Regalia-Mitra style double-complementary analysis filter bank.
+// Creates a Regalia-Mitra style doubly complementary analysis filter bank.
 //
 // Sadly, this does not use the all-pass structure as proposed by Regalia and
-// Mitra. Instead, it implements the equivalent structure using the
-// double-complementary low-pass and high-pass pairs.
+// Mitra. Instead, it implements the equivalent structure using the doubly
+// complementary low-pass and high-pass pairs.
 //
 // NOTE: After processing, you might want to use the synthesis filter bank
 // below, since the complete transfer function becomes invariant to changes in
@@ -77,7 +78,7 @@ rm_filterbank_analyse3e(fe) = fb with {
     fb = stage(N-1);
 };
 
-// Creates a Regalia-Mitra style double-complementary synthesis filter bank.
+// Creates a Regalia-Mitra style doubly complementary synthesis filter bank.
 // See the analysis filter bank above for comments.
 rm_filterbank_synthesize3e(fe) = fb with {
     N = count(fe);
