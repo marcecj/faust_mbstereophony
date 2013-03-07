@@ -47,7 +47,7 @@ The reason for the four versions are:
    using a synthesis filter bank results in the overall transfer function of the
    system becoming invariant to changes in edge frequency.
 
-So select each depending on your requirements.
+So select from them depending on your requirements.
 
 ### MBStereophony
 
