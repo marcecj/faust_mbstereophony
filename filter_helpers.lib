@@ -19,7 +19,7 @@ getacoeffs(P) = A with {
     A = par(i,N/2,take(N/2+1+i,P));
 };
 
-// generate a pair of double *c*omplementary filters
+// generate a pair of doubly *c*omplementary filters
 // see tf1s() in filter.lib
 tf1sc(b1,b0,a0,w1) = lp, hp
 with {
@@ -34,7 +34,7 @@ with {
   hp = tf1(q(0),q(1),a1d);
 };
 
-// generate a pair of double *c*omplementary filters
+// generate a pair of doubly *c*omplementary filters
 // see tf2s() in filter.lib
 tf2sc(b2,b1,b0,a1,a0,w1) = lp, hp
 with {
