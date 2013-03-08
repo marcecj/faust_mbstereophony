@@ -85,7 +85,6 @@ it only uses about 9% CPU on average when compiled with `clang++`.
 
 ## TODO
 
-- Add units to sliders.
 - Clean up the build system a bit (e.g., use a separate source directory, add
   documentation via `Help()`, improve the `faust` SCons tool)
 - Variable filter edge frequencies (currently, compilation takes too long for

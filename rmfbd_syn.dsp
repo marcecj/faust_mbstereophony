@@ -11,7 +11,7 @@ freq_minima   = 75, 500,1000,2000,4000;
 freq_defaults = 220., 880., 1760., 3520., 7040.;
 N = count(freq_defaults);
 freq_sliders = hgroup("Filterbank edge frequencies",
-    par(i,N,vslider("Freq. %j", fdef(i),fmin(i),fmax(i),1) with {
+    par(i,N,vslider("Freq. %j [unit:Hz]", fdef(i),fmin(i),fmax(i),1) with {
         j=i+1;
         fmin(i) = take(i+1,freq_minima);
         fmax(i) = take(i+1,freq_maxima);
