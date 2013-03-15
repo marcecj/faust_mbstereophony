@@ -69,7 +69,8 @@ typically look like
 any of the targets `mbstereophony`, `rmfbd_syn`, `rmfbd_sum`, `rmfbs_syn`, or
 `rmfbs_sum`.  That way you can build only the program you actually want to use.
 The SCons build system will automatically pass appropriate options to the FAUST
-compiler, such as `-vec` to produce auto-vectorisable code.
+compiler, such as `-vec` to produce auto-vectorisable code.  See the output of
+`scons --help` for more details.
 
 This relies on an externally available FAUST SCons tool that I found
 [here](https://github.com/kaoskorobase/skUG/blob/master/site_scons/site_tools/faust.py).
