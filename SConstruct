@@ -126,19 +126,23 @@ rmfb_dsp = env.Glob("rmfb*.dsp")
 
 rmfb = []
 for dsp in rmfb_dsp:
+    dsp_name = str(dsp).rsplit('.')[0]
     rmfb_src = [env.Faust(dsp)]
     if env["FAUST_ARCHITECTURE"] in ("jack-qt", "pa-qt"):
         rmfb_src.append(faustqt)
 
     if env["FAUST_ARCHITECTURE"] == "puredata":
         env.Append(CPPDEFINES = "mydsp=mbstereophony")
-        rmfb = env.SharedLibrary(
+        cur_rmfb = env.SharedLibrary(
             rmfb_src,
             SHLIBPREFIX="",
             SHLIBSUFFIX="~.pd_linux"
         )
     else:
-        rmfb.append(env.Program(rmfb_src))
+        cur_rmfb = env.Program(rmfb_src)
+
+    rmfb.append(cur_rmfb)
+    env.Alias(dsp_name, cur_rmfb)
 
 #################
 # Miscellaneous #
