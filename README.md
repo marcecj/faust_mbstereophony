@@ -11,6 +11,32 @@ down-mixes a stereo signal separately per frequency band.
 For implementations in MATLAB, Python and C++ - the latter of which does not
 work - see [this repository](http://sourceforge.net/projects/mbstereophony).
 
+## Compilation
+
+You can either use the provided SCons based build system, whose invocation would
+typically look like
+
+    scons -j<N> all
+
+`<N\>` is the number of parallel builds.  Instead of "all", you can also specify
+any of the targets `mbstereophony`, `rmfbd_syn`, `rmfbd_sum`, `rmfbs_syn`, or
+`rmfbs_sum`.  That way you can build only the program you actually want to use.
+The SCons build system will automatically pass appropriate options to the FAUST
+compiler, such as `-vec` to produce auto-vectorisable code.  See the output of
+`scons --help` for more details.
+
+This relies on an externally available FAUST SCons tool that I found
+[here](https://github.com/kaoskorobase/skUG/blob/master/site_scons/site_tools/faust.py).
+
+Of course, you can always just use any of the myriad of faust2\* scripts that
+are distributed with FAUST.  This requires more knowledge of the FAUST options,
+though (see `faust --help`).
+
+NOTE: it turns out that on my computer (AMD Athlon64 X2 4200+ from late 2006)
+`clang++` produces faster binaries than `g++`.  MBStereophony uses about 15% CPU
+on average when compiled with `g++` (with `CFLAGS="-O3 -march=native"`), while
+it only uses about 9% CPU on average when compiled with `clang++`.
+
 ## Usage
 
 ### RMFB\*
@@ -57,32 +83,6 @@ in full stereo (1), down-mixed to mono (0), or anything in-between.  The bands
 edge frequencies are at 220, 880, 1760, 3520, and 7040 Hz, so the filter bank is
 partially an octave filter bank.  Some of the bands were left out due to the
 exponential increase in compilation time for each additional band.
-
-## Compilation
-
-You can either use the provided SCons based build system, whose invocation would
-typically look like
-
-    scons -j<N> all
-
-`<N\>` is the number of parallel builds.  Instead of "all", you can also specify
-any of the targets `mbstereophony`, `rmfbd_syn`, `rmfbd_sum`, `rmfbs_syn`, or
-`rmfbs_sum`.  That way you can build only the program you actually want to use.
-The SCons build system will automatically pass appropriate options to the FAUST
-compiler, such as `-vec` to produce auto-vectorisable code.  See the output of
-`scons --help` for more details.
-
-This relies on an externally available FAUST SCons tool that I found
-[here](https://github.com/kaoskorobase/skUG/blob/master/site_scons/site_tools/faust.py).
-
-Of course, you can always just use any of the myriad of faust2\* scripts that
-are distributed with FAUST.  This requires more knowledge of the FAUST options,
-though (see `faust --help`).
-
-NOTE: it turns out that on my computer (AMD Athlon64 X2 4200+ from late 2006)
-`clang++` produces faster binaries than `g++`.  MBStereophony uses about 15% CPU
-on average when compiled with `g++` (with `CFLAGS="-O3 -march=native"`), while
-it only uses about 9% CPU on average when compiled with `clang++`.
 
 ## TODO
 
