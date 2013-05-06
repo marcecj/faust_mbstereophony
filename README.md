@@ -18,7 +18,7 @@ typically look like
 
     scons -j<N> all
 
-`<N\>` is the number of parallel builds.  Instead of "all", you can also specify
+`<N>` is the number of parallel builds.  Instead of "all", you can also specify
 any of the targets `mbstereophony`, `rmfbd_syn`, `rmfbd_sum`, `rmfbs_syn`, or
 `rmfbs_sum`.  That way you can build only the program you actually want to use.
 The SCons build system will automatically pass appropriate options to the FAUST
