@@ -9,11 +9,9 @@ import("rm_filter_bank.lib");
 freqs = 220., 880., 1760., 3520., 7040.;
 N = count(freqs)+1; // the number of bands
 
-mix_sliders = hgroup("Stereo Mix",
-    par(i,N,vslider("Band %j", 1,0,1,0.01) with {j=i+1;})
-) ;
-
-m(i) = mix_sliders:selector(i,N);
+mix_slider(i) = hgroup("Stereo Mix",
+    vslider("Band %j", 1,0,1,0.01) with {j=i+1;}
+);
 
 ana_fb = par(i,2,rm_filterbank_analyse3e(freqs)):interleave(N,2);
 syn_fb = interleave(2,N):par(i,2,rm_filterbank_synthesize3e(freqs));
@@ -21,4 +19,4 @@ stereo_sum(c) = _,_<:+(*(r),*(1-r)),+(*(1-r),*(r)) with {
     r = c*0.5+0.5;
 };
 
-process = ana_fb:par(i,N,stereo_sum(m(i))):syn_fb;
+process = ana_fb:par(i,N,stereo_sum(mix_slider(i))):syn_fb;

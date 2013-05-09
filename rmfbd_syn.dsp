@@ -10,16 +10,14 @@ freq_maxima   = 499,999,1999,3999,7999;
 freq_minima   = 75, 500,1000,2000,4000;
 freq_defaults = 220., 880., 1760., 3520., 7040.;
 N = count(freq_defaults);
-freq_sliders = hgroup("Filterbank edge frequencies",
-    par(i,N,vslider("Freq. %j [unit:Hz]", fdef(i),fmin(i),fmax(i),1) with {
+freq_slider(i) = hgroup("Filterbank edge frequencies",
+    vslider("Freq. %j [unit:Hz]", fdef(i),fmin(i),fmax(i),1) with {
         j=i+1;
         fmin(i) = take(i+1,freq_minima);
         fmax(i) = take(i+1,freq_maxima);
         fdef(i) = take(i+1,freq_defaults);
-        })
-) ;
+});
 
-f(i) = freq_sliders:selector(i,N);
-freqs = par(i,N,f(i));
+freqs = par(i,N,freq_slider(i));
 
 process = rm_filterbank_analyse3e(freqs), rm_filterbank_synthesize3e(freqs);
