@@ -130,7 +130,6 @@ for dsp in mbst_dsp+rmfb_dsp:
         c_src.append(faustqt)
 
     if env["FAUST_ARCHITECTURE"] == "puredata":
-        env.Append(CPPDEFINES = "mydsp=mbstereophony")
         cur_dsp = env.SharedLibrary(
             c_src,
             SHLIBPREFIX="",
