@@ -39,10 +39,8 @@ it only uses about 9% CPU on average when compiled with `clang++`.
 
 ## Usage
 
-### RMFB\*
-
-These are four filter bank applications that split a signal into six frequency
-bands.  They follow the following naming scheme:
+There are two groups of applications: RMFB\* and MBStereophony\*.  Each comes in
+four versions which follow the following naming scheme:
 
 - "d" and "s" (e.g., "rmfbd\_sum") stand for "dynamic" and "static",
   respectively.  The static filter banks have constant edge frequencies, whereas
@@ -52,18 +50,9 @@ bands.  They follow the following naming scheme:
   simply summing the frequency bands up ("sum") or by using a synthesis filter
   bank ("syn").
 
-The static filter banks have the edge frequencies set to 220, 880, 1760, 3520,
-and 7040 Hz.  All four of the applications have 7 audio inputs and 7 audio
-outputs:  The first input is for the input signal, while the first 6 outputs are
-from the analysis filter bank.  Correspondingly, the last 6 inputs belong to the
-reconstruction filter bank, while the last output is the reconstructed signal.
-Here a graphical representation:
-
-    Input                   |  Analysis Band 1
-    Reconstruction Band 1   |  Analysis Band 2
-    ...                     |  ...
-    Reconstruction Band N-1 |  Analysis Band N
-    Reconstruction Band N   |  Output
+The static versions have their edge frequencies set to 220, 880, 1760, 3520, and
+7040 Hz, so are partially octave filter banks.  Some of the bands were left out
+due to the exponential increase in compilation time for each additional band.
 
 The reason for the four versions are:
 
@@ -75,21 +64,33 @@ The reason for the four versions are:
 
 So select from them depending on your requirements.
 
+### RMFB\*
+
+These are four filter bank applications that split a signal into six frequency
+bands.
+
+All four of the applications have 7 audio inputs and 7 audio outputs:  The first
+input is for the input signal, while the first 6 outputs are from the analysis
+filter bank.  Correspondingly, the last 6 inputs belong to the reconstruction
+filter bank, while the last output is the reconstructed signal.  Here a
+graphical representation:
+
+    Input                   |  Analysis Band 1
+    Reconstruction Band 1   |  Analysis Band 2
+    ...                     |  ...
+    Reconstruction Band N-1 |  Analysis Band N
+    Reconstruction Band N   |  Output
+
 ### MBStereophony
 
 This is a demo effect for demonstrating the use of the filter banks.  For each
 frequency band there is a slider that controls whether the band should be left
-in full stereo (1), down-mixed to mono (0), or anything in-between.  The bands
-edge frequencies are at 220, 880, 1760, 3520, and 7040 Hz, so the filter bank is
-partially an octave filter bank.  Some of the bands were left out due to the
-exponential increase in compilation time for each additional band.
+in full stereo (1), down-mixed to mono (0), or anything in-between.
 
 ## TODO
 
 - Clean up the build system a bit (e.g., use a separate source directory, add
   documentation via `Help()`, improve the `faust` SCons tool)
-- Variable filter edge frequencies (currently, compilation takes too long for
-  that to be practical).
 
 ## References
 
