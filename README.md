@@ -60,7 +60,8 @@ The reason for the four versions are:
    compile them if you don't want to, and
 2. reconstruction by summing the bands requires only half as much CPU, while the
    using a synthesis filter bank results in the overall transfer function of the
-   system becoming invariant to changes in edge frequency.
+   system becoming invariant to changes in edge frequency (see the references
+   below).
 
 So select from them depending on your requirements.
 
