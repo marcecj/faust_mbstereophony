@@ -8,6 +8,12 @@ valid_faust_arches = (
     "puredata",
 )
 
+valid_concurrencies = (
+    "",
+    "openmp",
+    "wss",
+)
+
 ##########################
 # Environment definition #
 ##########################
@@ -18,7 +24,8 @@ env_vars.AddVariables(
                  "The FAUST architecture",
                  "jack-qt", valid_faust_arches),
     BoolVariable("osc", "Use Open Sound Control (OSC)", True),
-    BoolVariable("openmp", "Use OpenMP pragmas", False),
+    EnumVariable("concurrency", "FAUST's method of concurrency",
+                 "", valid_concurrencies),
     ("FAUST_FLAGS", "FAUST compiler flags"),
     ("CXX", "The C++ compiler")
 )
@@ -43,12 +50,18 @@ if env["osc"]:
         LIBS = ["OSCFaust", "oscpack"],
     )
 
-if env["openmp"]:
+if env["concurrency"] == "openmp":
 
     env.Append(
         CCFLAGS = ["-fopenmp"],
         FAUST_FLAGS = ["-omp"],
         LIBS = ["gomp"],
+    )
+
+elif env["concurrency"] == "wss":
+
+    env.Append(
+        FAUST_FLAGS = ["-sch"],
     )
 
 if env["FAUST_ARCHITECTURE"] == "pa-qt":
