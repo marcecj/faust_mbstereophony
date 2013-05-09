@@ -13,7 +13,7 @@
 
 # produced binaries
 *.lv2/
-mbstereophony
+mbstereophony*
 rmfb*
 !*.dsp
 

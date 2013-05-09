@@ -100,49 +100,38 @@ if env["CXX"] == "g++" and env["CXXVERSION"] >= "4.5":
         "-floop-block",
     ])
 
-########################
-# MBStereophony effect #
-########################
+######################################################
+# MBStereophony effect and Regalia-Mitra filter bank #
+######################################################
 
-mbstereophony_src = [env.Faust("mbstereophony.dsp")]
-if env["FAUST_ARCHITECTURE"] in ("jack-qt", "pa-qt"):
-    mbstereophony_src.append(faustqt)
-
-if env["FAUST_ARCHITECTURE"] == "puredata":
-    env.Append(CPPDEFINES = "mydsp=mbstereophony")
-    mbstereophony = env.SharedLibrary(
-        mbstereophony_src,
-        SHLIBPREFIX="",
-        SHLIBSUFFIX="~.pd_linux"
-    )
-else:
-    mbstereophony = env.Program(mbstereophony_src)
-
-#############################
-# Regalia-Mitra filter bank #
-#############################
-
+mbst_dsp = env.Glob("mbstereophony*.dsp")
 rmfb_dsp = env.Glob("rmfb*.dsp")
 
 rmfb = []
-for dsp in rmfb_dsp:
-    dsp_name = str(dsp).rsplit('.')[0]
-    rmfb_src = [env.Faust(dsp)]
+mbstereophony = []
+for dsp in mbst_dsp+rmfb_dsp:
+    dsp_name = str(dsp).rsplit(".")[0]
+
+    c_src = [env.Faust(dsp)]
     if env["FAUST_ARCHITECTURE"] in ("jack-qt", "pa-qt"):
-        rmfb_src.append(faustqt)
+        c_src.append(faustqt)
 
     if env["FAUST_ARCHITECTURE"] == "puredata":
         env.Append(CPPDEFINES = "mydsp=mbstereophony")
-        cur_rmfb = env.SharedLibrary(
-            rmfb_src,
+        cur_dsp = env.SharedLibrary(
+            c_src,
             SHLIBPREFIX="",
             SHLIBSUFFIX="~.pd_linux"
         )
     else:
-        cur_rmfb = env.Program(rmfb_src)
+        cur_dsp = env.Program(c_src)
 
-    rmfb.append(cur_rmfb)
-    env.Alias(dsp_name, cur_rmfb)
+    if dsp_name.startswith("mbstereophony"):
+        mbstereophony.append(cur_dsp)
+    else:
+        rmfb.append(cur_dsp)
+
+    env.Alias(dsp_name, cur_dsp)
 
 #################
 # Miscellaneous #
