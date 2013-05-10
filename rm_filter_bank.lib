@@ -91,6 +91,6 @@ rm_filterbank_synthesize3e(fe) = fb with {
 
 // some demo functions
 rm_filterbank_analyse_demo =
-rm_filterbank_analyse((1000,2000,3000,4000,5000,6000,7000,8000));
+rm_filterbank_analyse3e((1000,2000,3000,4000,5000,6000,7000,8000));
 rm_filterbank_synthesize_demo =
-rm_filterbank_analyse((1000,2000,3000)):rm_filterbank_synthesize((1000,2000,3000));
+rm_filterbank_analyse3e((1000,2000,3000)):rm_filterbank_synthesize3e((1000,2000,3000));
