@@ -159,10 +159,11 @@ Help(
 """This build system compiles MBStereophony and related programs.  To compile,
 use one of the following build targets:
 
-    mbstereophony       -> compile the MBStereophony effect (default)
-    rmfb{s,d}_{sum,syn} -> compile one of the rmfb* filter bank programs
-    rmfb                -> compile all of the rmfb* filter bank programs
-    all                 -> compile all of the above
+    mbstereophony{s,d}_{sum,syn} -> compile one of the mbstereophony* effects
+    mbstereophony                -> compile all of the mbstereophony* effects (default)
+    rmfb{s,d}_{sum,syn}          -> compile one of the rmfb* filter bank programs
+    rmfb                         -> compile all of the rmfb* filter bank programs
+    all                          -> compile all of the above
 
 The following environment variables can be overridden by passing them *after*
 the call to scons, e.g., "scons CC=gcc":
