@@ -6,7 +6,8 @@ Marc Joliet <marcec@gmx.de>
 This is a simple implementation of a Regalia-Mitra filter bank using 3rd order
 Cauer low-pass filters as the base designs.  There are four filter bank programs
 available which are described below.  MBStereophony itself is a demo effect that
-down-mixes a stereo signal separately per frequency band.
+down-mixes a stereo signal separately per frequency band.  It also has four
+versions as described below.
 
 For implementations in MATLAB, Python and C++ - the latter of which does not
 work - see [this repository](http://sourceforge.net/projects/mbstereophony).
@@ -19,11 +20,12 @@ typically look like
     scons -j<N> all
 
 `<N>` is the number of parallel builds.  Instead of "all", you can also specify
-any of the targets `mbstereophony`, `rmfbd_syn`, `rmfbd_sum`, `rmfbs_syn`, or
-`rmfbs_sum`.  That way you can build only the program you actually want to use.
-The SCons build system will automatically pass appropriate options to the FAUST
-compiler, such as `-vec` to produce auto-vectorisable code.  See the output of
-`scons --help` for more details.
+any of the group targets `mbstereophony` or `rmfb`, or any of the individual
+targets `mbstereophonyd_syn`, `mbstereophonyd_sum`, etc..  That way you can
+build only the program you actually want to use.  The SCons build system will
+automatically pass appropriate options to the FAUST compiler, such as `-vec` to
+produce auto-vectorisable code.  See the output of `scons --help` for more
+details.
 
 This relies on an externally available FAUST SCons tool that I found
 [here](https://github.com/kaoskorobase/skUG/blob/master/site_scons/site_tools/faust.py).
@@ -64,6 +66,10 @@ The reason for the four versions are:
    below).
 
 So select from them depending on your requirements.
+
+NOTE: the master branch of FAUST recently received a modification that greatly
+reduces the total compilation time of all of the programs below.  On my computer
+all 8 programs now compile in about 8 minutes vs. about 60 minutes before.
 
 ### RMFB\*
 
