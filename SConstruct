@@ -27,7 +27,9 @@ env_vars.AddVariables(
     EnumVariable("concurrency", "FAUST's method of concurrency",
                  "", valid_concurrencies),
     ("FAUST_FLAGS", "FAUST compiler flags"),
-    ("CXX", "The C++ compiler")
+    ("CXX", "The C++ compiler"),
+    ("CCFLAGS", "Extra flags to pass to the C and C++ compiler", "", None, str.split),
+    ("CXXFLAGS", "Extra flags to pass to the C++ compiler", "", None, str.split),
 )
 
 env = Environment(tools=["default", "faust"],
@@ -94,14 +96,18 @@ elif env["FAUST_ARCHITECTURE"] == "sndfile":
 
     env.Append(LIBS = ["sndfile"])
 
-env.Append(CPPPATH   = [env["FAUST_PATH"],
-                        "/usr/share/include"],
-           CCFLAGS   = ["-O3", "-pedantic", "-march=native",
-                        "-Wall", "-Wextra", "-Wno-unused-parameter"],
-           CXXFLAGS  = ["-std=c++0x"],
-           LINKFLAGS = ["-Wl,--as-needed"],
-           FAUST_FLAGS = ["-vec", "-t", "4800"],
-          )
+env.Append(
+    CPPPATH = [env["FAUST_PATH"], "/usr/share/include"],
+)
+
+# prepend so that you can override these if necessary
+env.Prepend(
+    CCFLAGS     = ["-O3", "-pedantic", "-march=native",
+                   "-Wall", "-Wextra", "-Wno-unused-parameter"],
+    CXXFLAGS    = ["-std=c++0x"],
+    LINKFLAGS   = ["-Wl,--as-needed"],
+    FAUST_FLAGS = ["-vec", "-t", "4800"],
+)
 
 # parallelization flags
 if env["CXX"] == "g++" and env["CXXVERSION"] >= "4.5":
