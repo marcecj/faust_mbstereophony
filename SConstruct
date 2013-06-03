@@ -1,4 +1,4 @@
-valid_faust_arches = (
+valid_faust_arches = frozenset((
     "bench",
     "sndfile",
     "pa-qt",
@@ -6,13 +6,13 @@ valid_faust_arches = (
     "jack-qt",
     "jack-gtk",
     "puredata",
-)
+))
 
-valid_concurrencies = (
+valid_concurrencies = frozenset((
     "",
     "openmp",
     "wss",
-)
+))
 
 ##########################
 # Environment definition #
