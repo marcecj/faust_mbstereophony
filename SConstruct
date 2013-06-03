@@ -139,6 +139,7 @@ mbst_dsp = env.Glob("mbstereophony*.dsp")
 rmfb_dsp = env.Glob("rmfb*.dsp")
 
 rmfb = []
+svgs = []
 mbstereophony = []
 for dsp in mbst_dsp+rmfb_dsp:
     dsp_name = str(dsp).rsplit(".")[0]
@@ -161,7 +162,11 @@ for dsp in mbst_dsp+rmfb_dsp:
     else:
         rmfb.append(cur_dsp)
 
+    cur_svg = env.FaustSVG(dsp)
+    svgs.append(cur_svg)
+
     env.Alias(dsp_name, cur_dsp)
+    env.Alias(dsp_name+"-svg", cur_svg)
 
 #################
 # Miscellaneous #
@@ -169,6 +174,7 @@ for dsp in mbst_dsp+rmfb_dsp:
 
 env.Alias("mbstereophony", mbstereophony)
 env.Alias("rmfb", rmfb)
+env.Alias("all-svg", svgs)
 env.Alias("all", mbstereophony + rmfb)
 
 Default("mbstereophony")
@@ -181,6 +187,8 @@ use one of the following build targets:
     mbstereophony                -> compile all of the mbstereophony* effects (default)
     rmfb{s,d}_{sum,syn}          -> compile one of the rmfb* filter bank programs
     rmfb                         -> compile all of the rmfb* filter bank programs
+    <target>-svg                 -> generate SVGs of <target>
+    all-svg                      -> generate SVGs of all targets
     all                          -> compile all of the above
 
 The following environment variables can be overridden by passing them *after*
