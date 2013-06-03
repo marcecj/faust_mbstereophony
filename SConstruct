@@ -32,11 +32,19 @@ env_vars.AddVariables(
     ("CXXFLAGS", "Extra flags to pass to the C++ compiler", "", None, str.split),
 )
 
-env = Environment(tools=["default", "faust"],
-                  variables=env_vars)
+env = Environment(variables=env_vars)
 
 if env["FAUST_ARCHITECTURE"].endswith("qt"):
     env.Tool("qt4")
+
+faust_tool = Tool("faust")
+
+# verify that FAUST is installed and exit if not
+if not faust_tool.exists(env):
+    print("FAUST is not available! Please install it first.")
+    env.Exit()
+
+faust_tool(env)
 
 #############################
 # Environment configuration #
