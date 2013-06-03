@@ -114,8 +114,12 @@ env.Prepend(
                    "-Wall", "-Wextra", "-Wno-unused-parameter"],
     CXXFLAGS    = ["-std=c++0x"],
     LINKFLAGS   = ["-Wl,--as-needed"],
-    FAUST_FLAGS = ["-vec", "-t", "4800"],
+    FAUST_FLAGS = ["-t", "4800"],
 )
+
+# Work around FAUST2 crashing
+if env['FAUST_VERSION'] < "2":
+    env.Append(FAUST_FLAGS = "-vec")
 
 # parallelization flags
 if env["CXX"] == "g++" and env["CXXVERSION"] >= "4.5":
