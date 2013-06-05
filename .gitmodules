@@ -1,0 +1,3 @@
+[submodule "site_scons/site_tools/faust"]
+	path = site_scons/site_tools/faust
+	url = git://github.com/marcecj/scons_faust.git

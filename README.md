@@ -27,8 +27,11 @@ automatically pass appropriate options to the FAUST compiler, such as `-vec` to
 produce auto-vectorisable code.  See the output of `scons --help` for more
 details.
 
-This relies on an externally available FAUST SCons tool that I found
-[here](https://github.com/kaoskorobase/skUG/blob/master/site_scons/site_tools/faust.py).
+This relies on an SCons FAUST tool available
+[here](https://github.com/marcecj/scons_faust).  It is a submodule of this
+repository and is initialised by executing
+
+    git submodule update --init
 
 Of course, you can always just use any of the myriad of faust2\* scripts that
 are distributed with FAUST.  This requires more knowledge of the FAUST options,
@@ -99,7 +102,7 @@ in full stereo (1), down-mixed to mono (0), or anything in-between.
 ## TODO
 
 - Clean up the build system a bit (e.g., use a separate source directory, add
-  documentation via `Help()`, improve the `faust` SCons tool)
+  documentation via `Help()`)
 
 ## References
 
