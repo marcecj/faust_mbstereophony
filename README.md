@@ -9,8 +9,8 @@ available which are described below.  MBStereophony itself is a demo effect that
 down-mixes a stereo signal separately per frequency band.  It also has four
 versions as described below.
 
-For implementations in MATLAB, Python and C++ — the latter of which does not
-work — see [this repository](http://sourceforge.net/projects/mbstereophony).
+For implementations in MATLAB, Python and C++ – the latter of which does not
+work – see [this repository](http://sourceforge.net/projects/mbstereophony).
 
 ## Compilation
 
