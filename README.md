@@ -72,7 +72,7 @@ So select from them depending on your requirements.
 
 NOTE: the master branch of FAUST recently received a modification that greatly
 reduces the total compilation time of all of the programs below.  On my computer
-all 8 programs now compile in about 8 minutes vs. about 60 minutes for the
+all 8 programs now compile in about 3:30 minutes vs. about 60 minutes for the
 original set of 5 programs (before commit
 290a6018591a98e2e0eea279e4947f764cc0e9e2).
 
