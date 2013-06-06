@@ -99,11 +99,6 @@ This is a demo effect for demonstrating the use of the filter banks.  For each
 frequency band there is a slider that controls whether the band should be left
 in full stereo (1), down-mixed to mono (0), or anything in-between.
 
-## TODO
-
-- Clean up the build system a bit (e.g., use a separate source directory, add
-  documentation via `Help()`)
-
 ## References
 
 The original paper (and some accompanying papers) can be downloaded from Pillip

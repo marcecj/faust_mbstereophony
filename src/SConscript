@@ -1,0 +1,43 @@
+import os
+
+Import("env")
+
+######################################################
+# MBStereophony effect and Regalia-Mitra filter bank #
+######################################################
+
+mbst_dsp = env.Glob("mbstereophony*.dsp")
+rmfb_dsp = env.Glob("rmfb*.dsp")
+
+rmfb = []
+svgs = []
+mbstereophony = []
+for dsp in mbst_dsp+rmfb_dsp:
+    dsp_name = os.path.splitext(os.path.basename(dsp.path))[0]
+
+    c_src = [env.Faust(dsp)]
+    if env["FAUST_ARCHITECTURE"] in ("jack-qt", "pa-qt"):
+        faustqt = env.Moc4("faustqt", "/usr/include/faust/gui/faustqt.h")
+        c_src.append(faustqt)
+
+    if env["FAUST_ARCHITECTURE"] == "puredata":
+        cur_dsp = env.SharedLibrary(
+            c_src,
+            SHLIBPREFIX="",
+            SHLIBSUFFIX="~.pd_linux"
+        )
+    else:
+        cur_dsp = env.Program(c_src)
+
+    if dsp_name.startswith("mbstereophony"):
+        mbstereophony.append(cur_dsp)
+    else:
+        rmfb.append(cur_dsp)
+
+    cur_svg = env.FaustSVG(os.sep.join(["#svgs", dsp_name]), dsp)
+    svgs.append(cur_svg)
+
+    env.Alias(dsp_name, cur_dsp)
+    env.Alias(dsp_name+"-svg", cur_svg)
+
+Return("rmfb", "svgs", "mbstereophony")

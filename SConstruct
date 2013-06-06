@@ -77,8 +77,6 @@ elif env["concurrency"] == "wss":
 if env["FAUST_ARCHITECTURE"] == "pa-qt":
 
     env.EnableQt4Modules(["QtGui", "QtCore"])
-    faustqt = env.Moc4("faustqt", "/usr/include/faust/gui/faustqt.h")
-
     env.Append(LIBS = ["portaudio"])
 
 elif env["FAUST_ARCHITECTURE"] == "pa-gtk":
@@ -89,8 +87,6 @@ elif env["FAUST_ARCHITECTURE"] == "pa-gtk":
 elif env["FAUST_ARCHITECTURE"] == "jack-qt":
 
     env.EnableQt4Modules(["QtGui", "QtCore"])
-    faustqt = env.Moc4("faustqt", "/usr/include/faust/gui/faustqt.h")
-
     env.Append(LIBS = ["jack"])
 
 elif env["FAUST_ARCHITECTURE"] == "jack-gtk":
@@ -131,42 +127,16 @@ if env["CXX"] == "g++" and env["CXXVERSION"] >= "4.5":
         "-floop-block",
     ])
 
-######################################################
-# MBStereophony effect and Regalia-Mitra filter bank #
-######################################################
+######################
+# Compile everything #
+######################
 
-mbst_dsp = env.Glob("mbstereophony*.dsp")
-rmfb_dsp = env.Glob("rmfb*.dsp")
-
-rmfb = []
-svgs = []
-mbstereophony = []
-for dsp in mbst_dsp+rmfb_dsp:
-    dsp_name = str(dsp).rsplit(".")[0]
-
-    c_src = [env.Faust(dsp)]
-    if env["FAUST_ARCHITECTURE"] in ("jack-qt", "pa-qt"):
-        c_src.append(faustqt)
-
-    if env["FAUST_ARCHITECTURE"] == "puredata":
-        cur_dsp = env.SharedLibrary(
-            c_src,
-            SHLIBPREFIX="",
-            SHLIBSUFFIX="~.pd_linux"
-        )
-    else:
-        cur_dsp = env.Program(c_src)
-
-    if dsp_name.startswith("mbstereophony"):
-        mbstereophony.append(cur_dsp)
-    else:
-        rmfb.append(cur_dsp)
-
-    cur_svg = env.FaustSVG(dsp)
-    svgs.append(cur_svg)
-
-    env.Alias(dsp_name, cur_dsp)
-    env.Alias(dsp_name+"-svg", cur_svg)
+rmfb, svgs, mbstereophony = env.SConscript(
+    dirs='src',
+    variant_dir = "build",
+    exports     = "env",
+    duplicate   = False
+)
 
 #################
 # Miscellaneous #
