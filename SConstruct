@@ -133,7 +133,7 @@ if env["CXX"] == "g++" and env["CXXVERSION"] >= "4.5":
 
 rmfb, svgs, mbstereophony = env.SConscript(
     dirs='src',
-    variant_dir = "build",
+    variant_dir = "build-${FAUST_LANG}-${FAUST_ARCHITECTURE}",
     exports     = "env",
     duplicate   = False
 )
